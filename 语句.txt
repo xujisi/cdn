@@ -1,0 +1,100 @@
+/获取数据
+GET iaas-logs-syslog-fms-2021.02.26/_search
+{
+  "query":{
+    "bool": {
+      "must": [
+        {
+          "match_all": {}
+        }
+      ]
+    }
+  }
+}
+
+/插入结构
+PUT iaas-logs-syslog-fms-2021.02.26
+{
+  	"mappings": {
+      "properties": {
+          "priority": {
+              "type": "text"
+          },
+          "pid": {
+              "type": "text"
+          },
+          "timestamp": {
+              "type": "date",
+              "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+          },
+          "facility": {
+              "type": "text"
+          },
+          "message":{
+            "type":"text"
+          },
+           "hostname":{
+            "type":"text"
+          },
+           "facility_lable":{
+            "type":"text"
+          },
+           "serverity_label":{
+            "type":"text"
+          },
+           "severity":{
+            "type":"text"
+          },
+           "program":{
+            "type":"text"
+          },
+           "syslog_server":{
+            "type":"text"
+          },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "ip": {"type": "text"},
+            "system": {"type": "text"}
+          }
+        },
+        "ssg_login": {
+          "type": "object",
+          "properties": {
+            "remote_port": {"type": "text"},
+            "protocol": {"type": "text"},
+            "user": {"type": "text"},
+            "remote_ip": {"type": "text"}
+          }
+        }
+      }
+    }
+}
+
+/插入数据
+POST iaas-logs-syslog-fms-2021.02.26/_doc
+{
+  "priority":"86",
+  "fields":{
+  "ip":"10.201.12.247",
+  "system":"fms"
+  },
+  "pid":"24368",
+  "facility":"1",
+  "message":"Accepted psaaword for kpiuser from 192.168.69.130 oirt 47171 ssh2",
+  "hostname":"GDGZ-PS-GCP2-APP36-VM",
+  "facility_lable":"security/authorization",
+  "serverity_label":"Informational",
+  "severity":"6",
+  "ssg_login":{
+  "remote_port":"47171",
+  "protocol":"ssh2",
+  "user":"kpiuser",
+  "remote_ip":"192.168.69.130"
+  },
+  "program":"sshd",
+  "syslog_server":"192.169.2.109:9687"
+}
+
+/删除索引
+delete iaas-logs-syslog-fms-2021.02.26
